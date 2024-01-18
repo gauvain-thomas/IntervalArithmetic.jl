@@ -96,6 +96,8 @@ function Base.sin(x::Interval)
     return _unsafe_interval(r, d, isguaranteed(x))
 end
 
+Base.sin(z::Complex{<:Interval}) = sin(real(z))*cosh(imag(z)) + cos(real(z))*sinh(imag(z))*im
+
 # not in the IEEE Standard 1788-2015
 
 function Base.sinpi(x::BareInterval{T}) where {T<:NumTypes}
@@ -185,6 +187,8 @@ function Base.cos(x::Interval)
     return _unsafe_interval(r, d, isguaranteed(x))
 end
 
+Base.cos(z::Complex{<:Interval}) = cos(real(z))*cosh(imag(z)) - sin(real(z))*sinh(imag(z))*im
+
 # not in the IEEE Standard 1788-2015
 
 function Base.cospi(x::BareInterval{T}) where {T<:NumTypes}
@@ -228,6 +232,8 @@ function Base.cospi(x::Interval)
     d = min(decoration(x), decoration(r))
     return _unsafe_interval(r, d, isguaranteed(x))
 end
+
+Base.exp(z::Complex{<:Interval}) = exp(real(z))*cos(imag(z)) + exp(real(z))*sin(imag(z))*im
 
 """
     tan(::BareInterval)

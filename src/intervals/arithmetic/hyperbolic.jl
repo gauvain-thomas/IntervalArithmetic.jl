@@ -23,6 +23,8 @@ for f ∈ (:sinh, :tanh, :asinh)
     end
 end
 
+Base.sinh(z::Complex{<:Interval}) = sinh(real(z))*cos(imag(z)) + cosh(real(z))*sin(imag(z))*im
+
 """
     cosh(::BareInterval)
     cosh(::Interval)
@@ -39,6 +41,8 @@ function Base.cosh(x::Interval)
     d = min(decoration(x), decoration(r))
     return _unsafe_interval(r, d, isguaranteed(x))
 end
+
+Base.cosh(z::Complex{<:Interval}) = cosh(real(z))*cos(imag(z)) + sinh(real(z))*sin(imag(z))*im
 
 """
     coth(::BareInterval)
